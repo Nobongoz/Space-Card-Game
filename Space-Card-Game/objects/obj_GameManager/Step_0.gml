@@ -124,15 +124,7 @@ switch(global.current_phase)
 		alarm[0] = 2 * room_speed;
 	}
 	
-	if(calc == false)
-	{
-		calc = true;
-		global.CPU_HP = global.CPU_HP - global.player_attack;
-		global.CPU_HP = global.CPU_HP + global.CPU_healing;
-		
-		global.player_HP = global.player_HP - global.CPU_attack;
-		global.player_HP = global.player_HP + global.player_healing;
-	}
+
 	
 	break;
 	
@@ -148,6 +140,33 @@ switch(global.current_phase)
 	
 	case global.phase_reshuffle:
 	
+	if(calc == false)
+	{
+		calc = true;
+		global.CPU_HP = global.CPU_HP - global.player_attack;
+		global.CPU_HP = global.CPU_HP + global.CPU_healing;
+		
+		global.player_HP = global.player_HP - global.CPU_attack;
+		global.player_HP = global.player_HP + global.player_healing;
+	}
+	
+	if(global.CPU_HP <= 0)
+	{
+		game_over = true;
+		global.CPU_HP = 0;
+		winner = 1;
+	}
+	if(global.player_HP <= 0)
+	{
+		game_over = true;
+		global.player_HP = 0;
+		winner = 0;
+	}
+	if(global.CPU_HP <= 0 && global.player_HP <= 0)
+	{
+		winner = 2;
+	}
+	
 	if(cardsMoved < deck_size && ds_list_size(discard_pile) > 0)
 	{
 		var card = discard_pile[| 0];
@@ -161,7 +180,7 @@ switch(global.current_phase)
 		//discard_pile[| cardsMoved]
 		cardsMoved++;
 	}
-	else if (ds_list_size(deck == deck_size) && reset == false)
+	else if (ds_list_size(deck == deck_size) && reset == false && game_over == false)
 	{
 		ds_list_shuffle(deck);
 		global.current_phase = global.phase_dealing;

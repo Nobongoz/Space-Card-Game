@@ -46,7 +46,7 @@ CPU_hand = ds_list_create();
 discard_pile = ds_list_create();
 
 //Player Stats
-global.player_HP = 50;
+global.player_HP = 20;
 global.player_healing = 0;
 global.player_attack = 0;
 global.player_upgrades = 1;
@@ -54,7 +54,7 @@ global.player_plays = 1;
 
 
 //CPU Stats
-global.CPU_HP = 50;
+global.CPU_HP = 20;
 global.CPU_healing = 0;
 global.CPU_attack = 0;
 global.CPU_upgrades = 1;
@@ -85,3 +85,8 @@ for(i = 0; i < deck_size; i++)
 	ds_list_shuffle(deck);
 	newCard.stackPos = i;
 }
+
+game_over = false;
+winner = noone;
+win_timer = 5;
+win_timer_up = false;
